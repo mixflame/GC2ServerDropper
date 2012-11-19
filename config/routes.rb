@@ -1,4 +1,8 @@
 GC2ServerDropper::Application.routes.draw do
+  root to: "main#welcome"
+
+  get "main/welcome"
+
   resources :server_droppers
 
   resources :servers
