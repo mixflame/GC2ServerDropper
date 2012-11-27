@@ -20,6 +20,8 @@ class Server < ActiveRecord::Base
 
   def restart
     logger.info "restarting server #{@host}:#{@port}"
+    self.stop
+    self.start
   end
 
   def stop
