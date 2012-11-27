@@ -5,43 +5,30 @@ describe Server do
   it "is real GC2 server" do
     # p @server
     @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
-
     sleep 5
 
-    gcc = GlobalChatController.new
-    gcc.handle = "test user"
-    gcc.host = @server.host
-    gcc.port = @server.port
-    gcc.password = @server.password
+    ServerDropper.check_server(@server.host, @server.port).should eq(true)
 
-    gcc.nicks = []
-    gcc.chat_buffer = ""
-
-    gcc.sign_on
-
-    sleep 3
-
-    gcc.chat_token.should_not be_nil
     ServerDropper.destroy_server @server.id
   end
 
-  it "is loves to do a drive by on GlobalChatNet" do
-    gcc = GlobalChatController.new
-    gcc.handle = "test user"
-    gcc.host = 'globalchat2.net'
-    gcc.port = 9994
-    gcc.password = ""
+  it 'can be restarted' do
+    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+    old_pid = @server.pid
+    ServerDropper.restart_server @server.id
+    new_pid = @server.pid
+    old_pid.should != new_pid
+  end
 
-    gcc.nicks = []
-    gcc.chat_buffer = ""
+  it "it loves to do a drive by on GlobalChatNet" do
+    ServerDropper.check_server('globalchat2.net', 9994).should eq(true)
+  end
 
-    gcc.sign_on
-
-    sleep 5
-
-    gcc.chat_buffer.should_not be_nil
-
-    gcc.sign_out
+  it 'can restart all servers' do
+    old_pid = Server.first.pid
+    ServerDropper.restart_all_servers
+    new_pid = Server.first.pid
+    old_pid.should != new_pid
   end
 
 end

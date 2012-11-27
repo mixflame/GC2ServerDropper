@@ -31,4 +31,27 @@ class ServerDropper
     port
   end
 
+  def self.restart_all_servers
+    servers = Server.all
+    servers.each do |server|
+      logger.info "restarting #{server.inspect}"
+      server.restart
+    end
+  end
+
+  def self.check_server(host, port)
+    gcc = GlobalChatController.new
+    gcc.handle = "test user"
+    gcc.host = host
+    gcc.port = port
+    gcc.password = ""
+    gcc.nicks = []
+    gcc.chat_buffer = ""
+    gcc.sign_on
+    sleep 3
+    val = gcc.chat_token != nil
+    gcc.sign_out
+    val
+  end
+
 end
