@@ -33,6 +33,8 @@ class ServerDropper
     port
   end
 
+  # admin method, call after code update
+  # rake task?
   def self.restart_all_servers
     servers = Server.all
     servers.each do |server|
@@ -41,12 +43,14 @@ class ServerDropper
     end
   end
 
-  def self.check_server(host, port)
+  # nexus security
+  # lives here because of cloud rules
+  def self.check_server(host, port, password="")
     gcc = GlobalChatController.new
     gcc.handle = "test user"
     gcc.host = host
     gcc.port = port
-    gcc.password = ""
+    gcc.password = password
     gcc.nicks = []
     gcc.chat_buffer = ""
     gcc.sign_on
