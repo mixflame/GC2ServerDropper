@@ -5,7 +5,7 @@ class GlobalChatController
   attr_accessor :chat_token, :chat_buffer, :nicks, :handle, :handle_text_field, :connect_button, :server_list_window, :chat_window, :chat_window_text, :chat_message, :nicks_table, :application, :scroll_view, :last_scroll_view_height, :host, :port, :password, :ts
 
   def initialize
-    
+
   end
 
   def quit
@@ -25,13 +25,13 @@ class GlobalChatController
     send_message("SIGNON", sign_on_array)
     begin_async_read_queue
   end
-  
+
   def begin_async_read_queue
     Thread.new do
       loop do
         data = ""
         while line = @ts.recv(1)
-          break if line == "\0" 
+          break if line == "\0"
           data += line
         end
         unless data == ""
@@ -41,7 +41,7 @@ class GlobalChatController
       end
     end
   end
-  
+
   def parse_line(line)
     parr = line.split("::!!::")
     command = parr.first
@@ -72,12 +72,12 @@ class GlobalChatController
       self.nicks.delete(handle)
     end
   end
-  
+
   def send_message(opcode, args)
     msg = opcode + "::!!::" + args.join("::!!::")
     sock_send @ts, msg
   end
-  
+
   def sock_send io, msg
     msg = "#{msg}\0"
     log msg
@@ -87,7 +87,7 @@ class GlobalChatController
   def post_message(message)
     send_message "MESSAGE", [message, @chat_token]
   end
-  
+
   def add_msg(handle, message)
     msg = "#{handle}: #{message}\n"
     output_to_chat_window msg
@@ -109,8 +109,9 @@ class GlobalChatController
     send_message "SIGNOFF", [@chat_token]
     @ts.close
   end
-  
+
   def log(msg)
+    puts msg
     #NSLog(msg)
     #output_to_chat_window msg
   end

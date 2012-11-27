@@ -62,7 +62,7 @@ group :test do
   gem "ffaker"
   gem 'rb-fsevent'
   gem 'guard-spinach', github: "keyvanfatehi/guard-spinach"
-  gem "guard-rspec"  
+  gem "guard-rspec"
   gem 'terminal-notifier-guard'
   gem "capybara"
   gem "capybara-webkit"

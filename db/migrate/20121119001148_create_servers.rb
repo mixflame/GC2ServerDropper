@@ -7,7 +7,7 @@ class CreateServers < ActiveRecord::Migration
       t.string :password
       t.boolean :private
       t.boolean :buffer_replay
-      t.integer :server_dropper_id
+      t.integer :pid
 
       t.timestamps
     end

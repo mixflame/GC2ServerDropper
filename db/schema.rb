@@ -11,14 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119001422) do
-
-  create_table "server_droppers", :force => true do |t|
-    t.string   "host"
-    t.integer  "port"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20121119001148) do
 
   create_table "servers", :force => true do |t|
     t.integer  "port"
@@ -28,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20121119001422) do
     t.boolean  "private"
     t.boolean  "buffer_replay"
     t.integer  "server_dropper_id"
+    t.integer  "pid"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end

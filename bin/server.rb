@@ -350,22 +350,34 @@ def nexus_offline
   Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline")
 end
 
-# at_exit do
-#   nexus_offline
-#   $gc.save_chat_log
-# end
+at_exit do
+  nexus_offline
+  $gc.save_chat_log
+end
 
-# $gc = GlobalChatServer.new(9994, '0.0.0.0', 1000, $stderr, true)
-# $gc.password = "" # set a password here
-# $gc.scrollback = true
-# $gc.start
+# usage
+# server.rb <host> <port> <name> <password> <private> <scrollback>
+# eg:
+# ./server.rb "globalchat2.net" "9994" "GlobalChatNet" "" "false" "true"
 
-# if ENV["RUBY_VERSION"] && ENV["RUBY_VERSION"].include?("1.9")
-#   ping_nexus("GlobalChatNet2", "globalchat2.net", $gc.port)
-# end
+host = ARGV[0]
+port = ARGV[1]
+chatnet_name = ARGV[2]
+password = ARGV[3]
+is_private = ARGV[4] == "true"
+scrollback = ARGV[5] == "true"
 
-# $gc.status
+$gc = GlobalChatServer.new(port, '0.0.0.0', 1000, $stderr, true)
+$gc.password = password # set a password here
+$gc.scrollback = scrollback
+$gc.server_name = chatnet_name
+$gc.start
 
-# $gc.join
+unless is_private
+  ping_nexus(chatnet_name, host, $gc.port)
+end
+$gc.status
+
+$gc.join
 
 
