@@ -1,3 +1,5 @@
+require 'global_chat_controller'
+
 class ServerDropper
 
   def self.create_server host, name, password, is_private, has_scrollback

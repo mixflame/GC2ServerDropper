@@ -1,2 +1,0 @@
-class ServerDroppersController < ApplicationController
-end

@@ -3,9 +3,7 @@ GC2ServerDropper::Application.routes.draw do
 
   get "main/welcome"
 
-  resources :server_droppers
-
-  resources :servers
+  get "main/check_server"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
