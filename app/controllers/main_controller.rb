@@ -22,7 +22,7 @@ class MainController < ApplicationController
   # dont care if private or passworded
   # just wanna be sure it worked
   def drop_server
-    raise 'unauthorized' unless params[:temporary] == "0BV10U5P4SSW0RD" # back end password to use this api
+    # raise 'unauthorized' unless params[:temporary] == "0BV10U5P4SSW0RD" # back end password to use this api
     host = params[:host]
     name = params[:name]
     password = params[:password]

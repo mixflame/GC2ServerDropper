@@ -34,11 +34,11 @@ class ServerDropper
   end
 
   # admin method, call after code update
-  # rake task?
+  # from rake task
   def self.restart_all_servers
     servers = Server.all
     servers.each do |server|
-      logger.info "restarting #{server.inspect}"
+      puts "restarting #{server.inspect}"
       server.restart
     end
   end
