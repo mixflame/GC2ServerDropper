@@ -1,5 +1,5 @@
 #!/bin/sh
-# test run
+# test run 2
 echo "restarting Passenger app"
 /home/globalchat/ServDrop/start_servdrop.sh
 
