@@ -14,7 +14,7 @@ class MainController < ApplicationController
     rescue
       @status = 404
     ensure
-      render :nothing => true, :status => @status
+      render :text => @status, :status => @status
     end
   end
 
