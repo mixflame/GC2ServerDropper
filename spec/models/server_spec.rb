@@ -5,6 +5,9 @@ describe Server do
   it "is real GC2 server" do
     # p @server
     @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+
+    ServerDropper.start_server(@server)
+
     sleep 5
 
     ServerDropper.check_server(@server.host, @server.port).should eq(true)
@@ -29,6 +32,12 @@ describe Server do
     ServerDropper.restart_all_servers
     new_pid = Server.first.pid
     old_pid.should != new_pid
+  end
+
+  after do
+    Server.all.each do |server|
+      ServerDropper.destroy_server server.id
+    end
   end
 
 end

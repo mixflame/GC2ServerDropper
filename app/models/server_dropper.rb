@@ -6,7 +6,6 @@ class ServerDropper
     port = ServerDropper.find_open_port
     server = Server.new(:host=>host, :port=>port, :name=>name, :password => password, :private=>is_private, :buffer_replay=>has_scrollback)
     server.save
-    server.start
     server
   end
 
@@ -16,6 +15,11 @@ class ServerDropper
     server.destroy
   end
 
+  def self.start_server id
+    server = Server.find(id)
+    server.start
+    server
+  end
 
   def self.restart_server id
     server = Server.find(id)
