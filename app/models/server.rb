@@ -26,8 +26,9 @@ class Server < ActiveRecord::Base
 
   def stop
     logger.info "stopping server #{@host}:#{@port}"
-    result = exec("kill #{self.pid}")
-    logger.info "kill result: #{result}"
+    #result = exec("kill #{self.pid}")
+    #logger.info "kill result: #{result}"
+    `kill #{self.pid}`
   end
 
 end

@@ -1,11 +1,14 @@
 require 'global_chat_controller'
 require 'spec_helper'
 
-describe Server do
-  it "is real GC2 server" do
-    # p @server
-    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+# SERVER DRIPPER TEST
+# i leave no trace
 
+describe Server do
+
+  it "is real GC2 server" do
+
+    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
     ServerDropper.start_server(@server)
 
     sleep 5
@@ -17,10 +20,12 @@ describe Server do
 
   it 'can be restarted' do
     @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+    sleep 5
+    ServerDropper.start_server(@server)
     old_pid = @server.pid
-    ServerDropper.restart_server @server.id
+    @server = ServerDropper.restart_server(@server.id)
     new_pid = @server.pid
-    old_pid.should != new_pid
+    old_pid.should_not == new_pid
   end
 
   it "it loves to do a drive by on GlobalChatNet" do
@@ -28,10 +33,14 @@ describe Server do
   end
 
   it 'can restart all servers' do
+    (0..10).each do |n|
+      server = ServerDropper.create_server("localhost", "YOLOChat#{n}", "", false, true)
+      ServerDropper.start_server(server)
+    end
     old_pid = Server.first.pid
     ServerDropper.restart_all_servers
     new_pid = Server.first.pid
-    old_pid.should != new_pid
+    old_pid.should_not == new_pid
   end
 
   after do

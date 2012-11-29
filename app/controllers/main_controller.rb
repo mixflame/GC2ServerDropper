@@ -29,6 +29,9 @@ class MainController < ApplicationController
     is_private = params[:private] == "true"
     has_scrollback = params[:scrollback] == "true"
     server = ServerDropper.create_server host, name, password, is_private, has_scrollback
+    # for now, start it.. ipn security later and bypass
+    sleep 3
+    server.start
     # easy reply, nexus will perform true check server security
     if server.pid
       render :nothing => true, :status => 200

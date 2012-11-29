@@ -51,7 +51,7 @@ class ServerDropper
   # lives here because of cloud rules
   def self.check_server(host, port, password="")
     gcc = GlobalChatController.new
-    gcc.handle = "test user"
+    gcc.handle = "ChatCheckBot"
     gcc.host = host
     gcc.port = port
     gcc.password = password
