@@ -1,4 +1,3 @@
-require 'global_chat_controller'
 require 'spec_helper'
 
 # SERVER DRIPPER TEST

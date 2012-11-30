@@ -16,12 +16,11 @@ end
 gem 'httparty'
 
 group :development do
-  gem 'letter_opener'
-  gem "annotate"
   gem "quiet_assets"
 end
 
 group :development, :test do
+  gem 'letter_opener'
   gem 'pry-rails'
   gem "rspec-rails"
   gem 'awesome_print'

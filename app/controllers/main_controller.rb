@@ -28,7 +28,7 @@ class MainController < ApplicationController
     # admin password (random)
     pass = rand(36**8).to_s(36)
 
-
+    ServerMailer.send_login_deetz(email, pass).deliver
 
     host = params[:host]
     name = params[:name]
