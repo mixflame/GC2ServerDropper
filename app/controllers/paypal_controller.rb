@@ -44,6 +44,12 @@ class PaypalController < ApplicationController
     # Verify all this with paypal
     http = Net::HTTP.start(paypal_url, 80)
     response = http.post('/cgi-bin/webscr', query)
+    case response
+    when Net::HTTPSuccess     then response
+    when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+    else
+      response.error!
+    end
     http.finish
 
     item_name = params[:item_name]
