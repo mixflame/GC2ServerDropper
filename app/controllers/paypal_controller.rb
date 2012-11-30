@@ -35,18 +35,16 @@ class PaypalController < ApplicationController
     request.params.each_pair {|key, value| query = query + '&' + key + '=' +
     value if key != 'register/pay_pal_ipn.html/pay_pal_ipn' }
 
-    paypal_url = 'www.paypal.com'
+    paypal_url = 'https://www.paypal.com'
     if ENV['RAILS_ENV'] == 'development'
       logger.info 'using sandbox'
-      paypal_url = 'www.sandbox.paypal.com'
+      paypal_url = 'https://www.sandbox.paypal.com'
     end
 
     # Verify all this with paypal
     http = Net::HTTP.new(paypal_url, 80)
-    http.open_timeout = 60
-    http.read_timeout = 60
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    http.use_ssl = true
+    # http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl
     response = http.post('/cgi-bin/webscr', query)
     http.finish
 
