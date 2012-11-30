@@ -5,5 +5,5 @@ namespace :dropper do
 end
 
 task :log do
-  `ssh -t globalchat@globalchat2.net "tail -fn 500 ~/ServDrop/log/production.log"'`
+  exec('ssh -t globalchat@globalchat2.net "tail -fn 500 ~/ServDrop/log/production.log"')
 end
