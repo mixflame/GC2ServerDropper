@@ -56,8 +56,8 @@ group :test do
   gem "capybara-screenshot"
   gem "headless"
   gem "database_cleaner"
-  gem "factory_girl_rails"
-  gem "simplecov", require: false
+  #gem "factory_girl_rails"
+  gem "simplecov", :require => false
   gem 'shoulda'
   gem "ffaker"
   gem 'rb-fsevent'
