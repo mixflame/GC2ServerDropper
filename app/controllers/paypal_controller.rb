@@ -43,13 +43,11 @@ class PaypalController < ApplicationController
 
     # Verify all this with paypal
     http = Net::HTTP.start(paypal_url, 80)
+    http.open_timeout = 60
+    http.read_timeout = 60
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.use_ssl = true
     response = http.post('/cgi-bin/webscr', query)
-    case response
-    when Net::HTTPSuccess     then response
-    when Net::HTTPRedirection then logger.info "redirect to #{response['location']}" #response = http.post(response['location'], query)
-    else
-      response.error!
-    end
     http.finish
 
     item_name = params[:item_name]
