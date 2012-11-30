@@ -10,14 +10,14 @@ group :assets do
   gem "coffee-rails"
   gem 'sass-rails'
   gem 'uglifier'
-  gem 'jquery-datatables-rails', :github => "rweng/jquery-datatables-rails"
-  gem 'jquery-ui-rails'
-  gem 'jquery-atwho-rails', '0.1.6'
-  gem 'jquery-rails'
-  gem 'bootstrap-sass'
-  gem "raphael-rails"
-  gem 'chosen-rails'
-  gem "modernizr"
+  # gem 'jquery-datatables-rails', :github => "rweng/jquery-datatables-rails"
+  # gem 'jquery-ui-rails'
+  # gem 'jquery-atwho-rails', '0.1.6'
+  # gem 'jquery-rails'
+  # gem 'bootstrap-sass'
+  # gem "raphael-rails"
+  # gem 'chosen-rails'
+  # gem "modernizr"
 end
 
 # gem "mini_magick"

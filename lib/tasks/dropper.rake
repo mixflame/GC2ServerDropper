@@ -7,3 +7,7 @@ end
 task :log do
   exec('ssh -t globalchat@globalchat2.net "tail -fn 500 ~/ServDrop/log/production.log"')
 end
+
+task :devlog do
+  exec('ssh -t globalchat@globalchat2.net "tail -fn 500 ~/ServDrop/log/development.log"')
+end
