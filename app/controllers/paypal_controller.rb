@@ -54,7 +54,7 @@ class PaypalController < ApplicationController
 
     logger.info "payment status: #{payment_status}"
     logger.info "txn_type #{txn_type}"
-    logger.info "response #{response.body.to_s}"
+    logger.info "response #{response.inspect}"
 
     # Paypal confirms so lets process.
     if response && response.body.chomp == 'VERIFIED'
