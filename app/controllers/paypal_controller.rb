@@ -51,7 +51,8 @@ class PaypalController < ApplicationController
     txn_type = params[:txn_type]
     custom = params[:custom]
 
-    logger.info payment_status
+    logger.info "payment status: #{payment_status}"
+    logger.info "txn_type #{txn_type}"
 
     # Paypal confirms so lets process.
     if response && response.body.chomp == 'VERIFIED'
