@@ -8,7 +8,7 @@ describe Server do
 
   it "is real GC2 server" do
 
-    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true, "admin@email.com", "")
     ServerDropper.start_server(@server)
 
     sleep 5
@@ -19,7 +19,7 @@ describe Server do
   end
 
   it 'can be restarted' do
-    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true)
+    @server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true, "admin@email.com", "")
     sleep 5
     ServerDropper.start_server(@server)
     old_pid = @server.pid
@@ -34,7 +34,7 @@ describe Server do
 
   it 'can restart all servers' do
     (0..10).each do |n|
-      server = ServerDropper.create_server("localhost", "YOLOChat#{n}", "", false, true)
+      server = ServerDropper.create_server("localhost", "YOLOChat", "", false, true, "admin@email.com", "")
       ServerDropper.start_server(server)
     end
     old_pid = Server.first.pid

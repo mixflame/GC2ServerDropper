@@ -20,7 +20,7 @@ describe MainController do
   describe "GET 'drop_server'" do
     it "returns http success" do
       #binding.pry
-      get 'drop_server', :host => 'localhost', :name => "ChucklesServer", :password => "hi", :private => "false", :scrollback => "true", :temporary => "0BV10U5P4SSW0RD"
+      get 'drop_server', :host => 'localhost', :name => "ChucklesServer", :password => "hi", :private => "false", :scrollback => "true", :email => "admin@email.com"
       response.should be_success
     end
   end

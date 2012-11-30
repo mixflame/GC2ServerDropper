@@ -2,9 +2,9 @@ require 'global_chat_controller'
 
 class ServerDropper
 
-  def self.create_server host, name, password, is_private, has_scrollback
+  def self.create_server host, name, password, is_private, has_scrollback, email, pass
     port = ServerDropper.find_open_port
-    server = Server.new(:host=>host, :port=>port, :name=>name, :password => password, :private=>is_private, :buffer_replay=>has_scrollback)
+    server = Server.new(:host=>host, :port=>port, :name=>name, :password => password, :private=>is_private, :buffer_replay=>has_scrollback, :email=>email, :pass=>pass)
     server.save
     server
   end
@@ -30,7 +30,7 @@ class ServerDropper
   def self.find_open_port
     require 'socket'
     socket = Socket.new(:INET, :STREAM, 0)
-    socket.setsockopt(:SOCKET, :REUSEADDR, 1)
+    socket.setsockopt(:SOCKET, :REUSEADDR, 1) # note the reuseaddr
     socket.bind(Addrinfo.tcp("127.0.0.1", 0))
     port = socket.local_address.ip_port
     socket.close

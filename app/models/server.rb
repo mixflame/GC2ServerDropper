@@ -4,7 +4,9 @@ class Server < ActiveRecord::Base
   :name,
   :password,
   :port,
-  :private
+  :private,
+  :email,
+  :pass
 
   def start
     logger.info "starting server #{self.host}:#{self.port}"

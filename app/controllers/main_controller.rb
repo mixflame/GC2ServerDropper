@@ -20,12 +20,22 @@ class MainController < ApplicationController
 
   # creates server, doesnt start it
   def drop_server
+    sender = request.host
+    logger.info "sender: #{sender}"
+
+    # admin login
+    email = params[:email]
+    # admin password (random)
+    pass = rand(36**8).to_s(36)
+
+
+
     host = params[:host]
     name = params[:name]
     password = params[:password]
     is_private = params[:private] == "true"
     has_scrollback = params[:scrollback] == "true"
-    server = ServerDropper.create_server host, name, password, is_private, has_scrollback
+    server = ServerDropper.create_server host, name, password, is_private, has_scrollback, email, pass
     # easy reply, nexus will perform true check server security
     if server
       render :nothing => true, :status => 200

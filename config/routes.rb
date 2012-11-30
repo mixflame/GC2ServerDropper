@@ -1,5 +1,5 @@
 GC2ServerDropper::Application.routes.draw do
-  root to: "main#welcome"
+  root :to => "main#welcome"
 
   get "main/check_server"
 
