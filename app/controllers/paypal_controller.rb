@@ -46,7 +46,7 @@ class PaypalController < ApplicationController
     response = http.post('/cgi-bin/webscr', query)
     case response
     when Net::HTTPSuccess     then response
-    when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+    when Net::HTTPRedirection then logger.info "redirect to #{response['location']}" #response = http.post(response['location'], query)
     else
       response.error!
     end
