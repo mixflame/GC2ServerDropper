@@ -18,22 +18,16 @@ class MainController < ApplicationController
     end
   end
 
-  # actually create the server
-  # dont care if private or passworded
-  # just wanna be sure it worked
+  # creates server, doesnt start it
   def drop_server
-    # raise 'unauthorized' unless params[:temporary] == "0BV10U5P4SSW0RD" # back end password to use this api
     host = params[:host]
     name = params[:name]
     password = params[:password]
     is_private = params[:private] == "true"
     has_scrollback = params[:scrollback] == "true"
     server = ServerDropper.create_server host, name, password, is_private, has_scrollback
-    # for now, start it.. ipn security later and bypass
-    sleep 3
-    server.start
     # easy reply, nexus will perform true check server security
-    if server.pid
+    if server
       render :nothing => true, :status => 200
     else
       render :nothing => true, :status => 404

@@ -1,11 +1,11 @@
 GC2ServerDropper::Application.routes.draw do
   root to: "main#welcome"
 
-  get "main/welcome"
-
   get "main/check_server"
 
   get "main/drop_server"
+
+  match "/ipn" => "paypal#paypal_ipn"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
