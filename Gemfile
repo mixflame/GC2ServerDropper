@@ -10,7 +10,7 @@ group :assets do
   gem "coffee-rails"
   gem 'sass-rails'
   gem 'uglifier'
-  gem 'jquery-datatables-rails', github: "rweng/jquery-datatables-rails"
+  gem 'jquery-datatables-rails', :github => "rweng/jquery-datatables-rails"
   gem 'jquery-ui-rails'
   gem 'jquery-atwho-rails', '0.1.6'
   gem 'jquery-rails'
@@ -61,7 +61,7 @@ group :test do
   gem 'shoulda'
   gem "ffaker"
   gem 'rb-fsevent'
-  gem 'guard-spinach', github: "keyvanfatehi/guard-spinach"
+  gem 'guard-spinach', :github => "keyvanfatehi/guard-spinach"
   gem "guard-rspec"
   gem 'terminal-notifier-guard'
   gem "capybara"
