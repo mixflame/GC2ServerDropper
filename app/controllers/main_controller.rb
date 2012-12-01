@@ -20,8 +20,10 @@ class MainController < ApplicationController
 
   # creates server, doesnt start it
   def drop_server
-    sender = request.env['REMOTE_HOST']
-    logger.info "sender: #{sender}"
+    sender = request.env['REMOTE_ADDR']
+    require 'resolv'
+    host_name = Resolv.getname(sender)
+    logger.info "sender: #{hostname}"
 
     # admin login
     email = params[:email]
