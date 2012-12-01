@@ -308,7 +308,7 @@ class GlobalChatServer < GServer
   # Params:
   # +msg+:: what to log
   def log(msg)
-    puts msg
+    #puts msg
   end
 
   # Persist my chat buffer to disk
@@ -338,7 +338,7 @@ end
 # +host+:: Hostname of chat server
 # +port+:: The listening port
 def ping_nexus(chatnet_name, host, port)
-  puts "Pinging NexusNet that I'm Online!!"
+  #puts "Pinging NexusNet that I'm Online!!"
   uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
   Net::HTTP.get(uri)
   $published = true
@@ -346,7 +346,7 @@ end
 
 # Tell Nexus I am no longer online
 def nexus_offline(chatnet_name)
-  puts "Informing NexusNet that I have exited!!!"
+  #puts "Informing NexusNet that I have exited!!!"
   Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?chatnet_name=#{chatnet_name}")
 end
 
