@@ -32,7 +32,7 @@ class MainController < ApplicationController
     host += ".globalchat2.net"
     name = "#{Forgery::Address.street_name.split(" ").first}Chat"
     password = ""
-    is_private = true
+    is_private = false
     has_scrollback = true
     server = ServerDropper.create_server host, name, password, is_private, has_scrollback, email, pass
     sleep 3
