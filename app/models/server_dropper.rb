@@ -48,6 +48,15 @@ class ServerDropper
     end
   end
 
+  # lol
+  def self.destroy_all_servers
+    servers = Server.all
+    servers.each do |server|
+      puts "destroying #{server.inspect}"
+      ServerDropper.destroy_server id
+    end
+  end
+
   # nexus security
   # lives here because of cloud rules
   def self.check_server(host, port, password="")
