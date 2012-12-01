@@ -44,6 +44,17 @@ class MainController < ApplicationController
     end
   end
 
+  def destroy_server
+    begin
+      email = params[:email]
+      server = Server.find_by_email(email)
+      ServerDropper.destroy_server server.id
+      render :text => "Destroyed", :status => 200
+    rescue
+      render :text => "Not Destroyed", :status => 404
+    end
+  end
+
   private
 
   def check_heroku

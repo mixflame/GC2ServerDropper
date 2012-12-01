@@ -5,6 +5,8 @@ GC2ServerDropper::Application.routes.draw do
 
   get "main/drop_server"
 
+  get "main/destroy_server"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
