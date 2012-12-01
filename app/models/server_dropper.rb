@@ -53,7 +53,7 @@ class ServerDropper
     servers = Server.all
     servers.each do |server|
       puts "destroying #{server.inspect}"
-      ServerDropper.destroy_server id
+      ServerDropper.destroy_server server.id
     end
   end
 
