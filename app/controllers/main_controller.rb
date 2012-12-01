@@ -1,4 +1,6 @@
 class MainController < ApplicationController
+  before_filter :check_heroku, :except => :welcome
+
   def welcome
     #landing
   end
@@ -20,11 +22,6 @@ class MainController < ApplicationController
 
   # creates server, doesnt start it
   def drop_server
-    sender = request.env['REMOTE_ADDR']
-    require 'resolv'
-    hostname = Resolv.getname(sender)
-    logger.info "sender: #{hostname}"
-
     # admin login
     email = params[:email]
     # admin password (random)
@@ -45,6 +42,16 @@ class MainController < ApplicationController
     else
       render :nothing => true, :status => 404
     end
+  end
+
+  private
+
+  def check_heroku
+    sender = request.env['REMOTE_ADDR']
+    require 'resolv'
+    hostname = Resolv.getname(sender)
+    logger.info "sender: #{hostname}"
+    raise 'unauthorized' unless sender.match('amazonaws.com')
   end
 
 end
