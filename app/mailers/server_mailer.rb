@@ -6,9 +6,11 @@ class ServerMailer < ActionMailer::Base
   #
   #   en.server_mailer.send_login_deetz.subject
   #
-  def send_login_deetz(email, pass)
+  def send_login_deetz(email, pass, host, port)
     @pass = pass
     @email = email
-    mail :to => email
+    @host = host
+    @port = port
+    mail :to => email, :subject => "Thank you for buying a hosted GC2 server!"
   end
 end

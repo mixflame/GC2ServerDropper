@@ -28,13 +28,12 @@ class MainController < ApplicationController
     # admin password (random)
     pass = rand(36**8).to_s(36)
 
-    ServerMailer.send_login_deetz(email, pass).deliver
-
-    host = params[:host]
-    name = params[:name]
-    password = params[:password]
-    is_private = params[:private] == "true"
-    has_scrollback = params[:scrollback] == "true"
+    host = [Forgery::Basic.color, Forgery::Address.street_name.split(" ").first, rand(100)].join("-").downcase
+    host += ".globalchat2.net"
+    name = "#{Forgery::Address.street_name.split(" ").first}Chat"
+    password = ""
+    is_private = true
+    has_scrollback = true
     server = ServerDropper.create_server host, name, password, is_private, has_scrollback, email, pass
     sleep 3
     server.start
