@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_filter :check_heroku, :except => :welcome
+  before_filter :check_heroku, :except => [:welcome]
 
   def welcome
     #landing
@@ -62,7 +62,7 @@ class MainController < ApplicationController
     require 'resolv'
     hostname = Resolv.getname(sender)
     logger.info "sender: #{hostname}"
-    raise 'unauthorized' unless sender.include?('amazonaws.com')
+    raise 'unauthorized' if sender.include?('amazonaws.com') == false
   end
 
 end
