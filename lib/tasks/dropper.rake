@@ -2,9 +2,10 @@ namespace :dropper do
   task :restart_all => :environment do
     ServerDropper.restart_all_servers
   end
-  task :destroy_all => :environment do
-    ServerDropper.destroy_all_servers
-  end
+  # never used
+  # task :destroy_all => :environment do
+  #   ServerDropper.destroy_all_servers
+  # end
 end
 
 task :log do
