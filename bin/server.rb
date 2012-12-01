@@ -27,7 +27,8 @@ class GlobalChatServer < GServer
     self.audit = true
     self.debug = true
     # hostname. need to seperate the logs
-    @pstore = PStore.new("#{ARGV[0]}.pstore")
+    # i put in tmp for nicety
+    @pstore = PStore.new("tmp/#{ARGV[0]}.pstore")
     @handle_keys = {} # stores handle
     @socket_keys = {} # stores chat_token
     # @port_keys = {} # unnecessary in PING design

@@ -11,11 +11,11 @@ class Server < ActiveRecord::Base
   def start
     logger.info "starting server #{self.host}:#{self.port}"
     # binding.pry
-    server_path = "#{File.expand_path(File.dirname(__FILE__))}/../../bin/server.rb '#{self.host}' '#{self.port}' '#{self.name}' '#{self.password}' '#{self.private}' '#{self.buffer_replay}' "
+    server_path = "#{Rails.root.to_s}/bin/server.rb '#{self.host}' '#{self.port}' '#{self.name}' '#{self.password}' '#{self.private}' '#{self.buffer_replay}' "
     logger.info "path: #{server_path}"
     #io = IO.popen(server_path)
     #pid = io.pid
-    `.#{server_path}`
+    `#{server_path}`
     pid = $?.pid
     logger.info "opened server, pid #{pid}"
     self.update_attribute(:pid, pid)
