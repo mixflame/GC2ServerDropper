@@ -62,7 +62,7 @@ class MainController < ApplicationController
     require 'resolv'
     hostname = Resolv.getname(sender)
     logger.info "sender: #{hostname}"
-    raise 'unauthorized' unless sender.match('amazonaws.com')
+    raise 'unauthorized' unless sender.include?('amazonaws.com')
   end
 
 end
