@@ -22,7 +22,7 @@ class MainController < ApplicationController
   def drop_server
     sender = request.env['REMOTE_ADDR']
     require 'resolv'
-    host_name = Resolv.getname(sender)
+    hostname = Resolv.getname(sender)
     logger.info "sender: #{hostname}"
 
     # admin login
