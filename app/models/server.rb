@@ -32,7 +32,7 @@ class Server < ActiveRecord::Base
     logger.info "stopping server #{@host}:#{@port}"
     #result = exec("kill #{self.pid}")
     #logger.info "kill result: #{result}"
-    `kill #{self.pid}`
+    `kill -2 #{self.pid}`
   end
 
 end
