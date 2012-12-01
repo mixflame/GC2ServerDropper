@@ -20,7 +20,7 @@ class MainController < ApplicationController
 
   # creates server, doesnt start it
   def drop_server
-    sender = request.remote_host
+    sender = request.env['REMOTE_HOST']
     logger.info "sender: #{sender}"
 
     # admin login
