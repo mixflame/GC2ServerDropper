@@ -348,11 +348,14 @@ end
 # Tell Nexus I am no longer online
 def nexus_offline
   puts "Informing NexusNet that I have exited!!!"
-  Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline")
+  uri = URI.parse("http://nexusnet.herokuapp.com/offline_by_name")
+  query = {:name => chatnet_name}
+  uri.query = URI.encode_www_form( query )
+  Net::HTTP.get(uri)
 end
 
 at_exit do
-  nexus_offline
+  nexus_offline(ARGV[2])
   $gc.save_chat_log
 end
 
@@ -367,6 +370,7 @@ chatnet_name = ARGV[2]
 password = ARGV[3]
 is_private = ARGV[4] == "true"
 scrollback = ARGV[5] == "true"
+
 
 $gc = GlobalChatServer.new(port, '0.0.0.0', 1000, $stderr, true)
 $gc.password = password # set a password here
