@@ -65,9 +65,10 @@ GC2ServerDropper::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  # FIXME: hide this to stay opensource
   ActionMailer::Base.smtp_settings = {
-    :user_name => "globalchat",
-    :password => "globalchatrulez",
+    :user_name => "jsilver@mindynamics.com",
+    :password => "globalchat",
     :domain => "globalchat2.net",
     :address => "smtp.sendgrid.net",
     :port => 587,
