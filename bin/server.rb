@@ -339,20 +339,15 @@ end
 # +port+:: The listening port
 def ping_nexus(chatnet_name, host, port)
   puts "Pinging NexusNet that I'm Online!!"
-  uri = URI.parse("http://nexusnet.herokuapp.com/online")
-  query = {:name => chatnet_name, :port => port, :host => host}
-  uri.query = URI.encode_www_form( query )
+  uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
   Net::HTTP.get(uri)
   $published = true
 end
 
 # Tell Nexus I am no longer online
-def nexus_offline(chatnet_name)
+def nexus_offline
   puts "Informing NexusNet that I have exited!!!"
-  uri = URI.parse("http://nexusnet.herokuapp.com/offline_by_name")
-  query = {:name => chatnet_name}
-  uri.query = URI.encode_www_form( query )
-  Net::HTTP.get(uri)
+  Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline")
 end
 
 at_exit do
