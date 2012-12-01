@@ -1,5 +1,6 @@
 #!/bin/bash
 echo 'restart'
-sudo passenger stop -p 80
-sudo passenger start -p 80 -d --user=globalchat -e production
+# sudo passenger stop -p 80
+# sudo passenger start -p 80 -d --user=globalchat -e production
 # sudo passenger start -p 80 -d --user=globalchat
+/home/globalchat/ServDrop/start_servdrop.sh
