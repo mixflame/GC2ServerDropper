@@ -13,10 +13,10 @@ class Server < ActiveRecord::Base
     # binding.pry
     server_path = "#{Rails.root.to_s}/bin/server.rb '#{self.host}' '#{self.port}' '#{self.name}' '#{self.password}' '#{self.private}' '#{self.buffer_replay}' "
     logger.info "path: #{server_path}"
-    #io = IO.popen(server_path)
-    #pid = io.pid
-    `#{server_path}`
-    pid = $?.pid
+    io = IO.popen(server_path)
+    pid = io.pid
+    #`#{server_path}`
+    #pid = $?.pid
     logger.info "opened server, pid #{pid}"
     self.update_attribute(:pid, pid)
   end
