@@ -15,7 +15,7 @@ class Server < ActiveRecord::Base
     logger.info "path: #{server_path}"
     #io = IO.popen(server_path)
     #pid = io.pid
-    `#{server_path}`
+    `.#{server_path}`
     pid = $?.pid
     logger.info "opened server, pid #{pid}"
     self.update_attribute(:pid, pid)
