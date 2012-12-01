@@ -23,13 +23,13 @@ class Server < ActiveRecord::Base
 
 
   def restart
-    logger.info "restarting server #{@host}:#{@port}"
+    logger.info "restarting server #{self.host}:#{self.port}"
     self.stop
     self.start
   end
 
   def stop
-    logger.info "stopping server #{@host}:#{@port}"
+    logger.info "stopping server #{self.host}:#{self.port} pid #{self.pid}"
     #result = exec("kill #{self.pid}")
     #logger.info "kill result: #{result}"
     `kill -2 #{self.pid}`
