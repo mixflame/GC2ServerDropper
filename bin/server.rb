@@ -345,9 +345,9 @@ def ping_nexus(chatnet_name, host, port)
 end
 
 # Tell Nexus I am no longer online
-def nexus_offline
+def nexus_offline(chatnet_name)
   puts "Informing NexusNet that I have exited!!!"
-  Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline")
+  Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?chatnet_name=#{chatnet_name}")
 end
 
 at_exit do
