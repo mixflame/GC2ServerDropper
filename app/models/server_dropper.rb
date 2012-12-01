@@ -5,8 +5,8 @@ class ServerDropper
   def self.create_server host, name, password, is_private, has_scrollback, email, pass
     port = ServerDropper.find_open_port
     server = Server.new(:host=>host, :port=>port, :name=>name, :password => password, :private=>is_private, :buffer_replay=>has_scrollback, :email=>email, :pass=>pass)
+    server.save!
     ServerMailer.send_login_deetz(email, pass, host, port).deliver
-    server.save
     server
   end
 

@@ -8,6 +8,9 @@ class Server < ActiveRecord::Base
   :email,
   :pass
 
+  # they may only have one
+  validates_uniqueness_of :email
+
   def start
     logger.info "starting server #{self.host}:#{self.port}"
     # binding.pry
