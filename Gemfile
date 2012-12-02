@@ -8,12 +8,12 @@ gem 'puma'
 
 gem 'sqlite3'
 
-group :assets do
-  gem 'haml-rails'
-  gem "coffee-rails"
-  gem 'sass-rails'
-  gem 'uglifier'
-end
+# group :assets do
+#   gem 'haml-rails'
+#   gem "coffee-rails"
+#   gem 'sass-rails'
+#   gem 'uglifier'
+# end
 
 gem 'httparty'
 
