@@ -1,2 +1,4 @@
-#!/bin/bash
-echo 'restart'
+#!/usr/bin/env ruby
+#echo 'restart'
+require 'net/http'
+Net::HTTP.get(URI.parse("http://globalchat2.net:81/restart?token=RaspberryWinter"))
