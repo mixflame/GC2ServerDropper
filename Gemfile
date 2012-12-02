@@ -4,7 +4,8 @@ gem 'rails', '3.2.8'
 
 gem 'forgery'
 
-gem 'thin'
+gem 'puma'
+
 gem 'sqlite3'
 
 group :assets do
