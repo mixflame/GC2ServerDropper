@@ -135,7 +135,7 @@ build_chat_log = ->
     out += "#{msg[0]}: #{msg[1]}\n"
   out
 clean_handles = ->
-  for k, v of handle_keys when (handle_last_pinged[k]? && handle_last_pinged[k] < (new Date().getTime() - 30*1000))
+  for k, v of handle_keys when (handle_last_pinged[k] < (new Date().getTime() - 15*1000))
     remove_user_by_handle(v)
 build_handle_list = ->
   return handles.unique().join("\n")
