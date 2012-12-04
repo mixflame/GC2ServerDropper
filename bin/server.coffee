@@ -28,7 +28,7 @@ GUID = ->
 
 log = (msg) ->
   #unless msg.indexOf('PING') > 0 || msg.indexOf('PONG') > 0
-  #console.log "#{msg}\n"
+  util.log "#{msg}\n"
 
 p = (obj) ->
   log util.inspect(obj)
