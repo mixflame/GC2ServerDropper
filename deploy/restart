@@ -2,3 +2,7 @@
 #echo 'restart'
 require 'net/http'
 Net::HTTP.get(URI.parse("http://globalchat2.net:81/restart?token=RaspberryWinter"))
+
+
+exec('bundle exec rake dropper:restart_all RAILS_ENV="production"')
+
