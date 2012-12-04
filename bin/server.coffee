@@ -88,6 +88,8 @@ load_chat_log = ->
         msg = msgstr.split(": ")
         buffer.push [msg[0], msg[1]]
 
+load_chat_log()
+
 broadcast = (message, sender) ->
   for c in sockets when c.stream isnt sender
     sock_send c.stream, message
@@ -221,8 +223,6 @@ server = net.createServer((socket) ->
 ).listen port
 
 log "#{server_name} running on GC2-Node at #{host}:#{port} Replay:#{scrollback} Passworded:#{password != ''} Private:#{is_private}"
-
-load_chat_log()
 
 ping_nexus()
 
