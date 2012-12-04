@@ -33,11 +33,6 @@ log = (msg) ->
 p = (obj) ->
   log util.inspect(obj)
 
-class Client
-  constructor: (stream) ->
-    @stream = stream
-    @name = null
-
 buffer = []
 sockets = []
 host = process.argv[2] # 'localhost'
@@ -91,8 +86,8 @@ load_chat_log = ->
 load_chat_log()
 
 broadcast = (message, sender) ->
-  for c in sockets when c.stream isnt sender
-    sock_send c.stream, message
+  for s in sockets when s isnt sender
+    sock_send s, message
   p message
 remove_user_by_handle = (handle) ->
   ct = ct for ct, nick of handle_keys when nick is handle
@@ -164,7 +159,6 @@ parse_line = (line, io) ->
       handle_keys[chat_token] = handle
       socket_keys[io] = chat_token
       handles.push handle
-      sockets.push io
       send_message(io, "TOKEN", [chat_token, handle, server_name])
       broadcast_message(io, "JOIN", [handle])
     else
@@ -202,13 +196,11 @@ pong_everyone = ->
 # start the server
 
 server = net.createServer((socket) ->
-  # socket.setTimeout 0
+  socket.setTimeout 0
   socket.setEncoding "utf8"
-  # socket.setKeepAlive true
-  # socket.setNoDelay false
-  client = new Client(socket)
-  client.name = socket.remoteAddress + ":" + socket.remotePort
-  sockets.push client
+  socket.setKeepAlive true
+  socket.setNoDelay false
+  sockets.push socket
 
   socket.on "data", (data) ->
     line = data.match(/[^\0]+/).toString() #magic part
