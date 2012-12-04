@@ -195,7 +195,7 @@ parse_line = (line, io) ->
       broadcast_message(null, "LEAVE", [handle])
       io.end
 pong_everyone = ->
-  if sockets.length > 0
+  if sockets.length > 0 && handles.length > 0
     broadcast_message(null, "PONG", [build_handle_list()])
     clean_handles
 
