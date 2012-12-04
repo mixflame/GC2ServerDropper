@@ -202,10 +202,10 @@ pong_everyone = ->
 # start the server
 
 server = net.createServer((socket) ->
-  socket.setTimeout 0
+  # socket.setTimeout 0
   socket.setEncoding "utf8"
-  socket.setKeepAlive true
-  socket.setNoDelay false
+  # socket.setKeepAlive true
+  # socket.setNoDelay false
   client = new Client(socket)
   client.name = socket.remoteAddress + ":" + socket.remotePort
   sockets.push client
