@@ -28,7 +28,7 @@ GUID = ->
 
 log = (msg) ->
   #unless msg.indexOf('PING') > 0 || msg.indexOf('PONG') > 0
-  console.log "#{msg}\n"
+  #console.log "#{msg}\n"
 
 p = (obj) ->
   log util.inspect(obj)
@@ -80,13 +80,13 @@ save_chat_log = ->
 
 load_chat_log = ->
   fs.exists "tmp/#{server_name}.log", (exists) ->
-  if exists?
-    fs.readFile "tmp/#{server_name}.log", (err, data) ->
-      throw err if err
-      for msgstr in data.toString().split("\n")
-        break if msgstr == ''
-        msg = msgstr.split(": ")
-        buffer.push [msg[0], msg[1]]
+    if exists == true
+      fs.readFile "tmp/#{server_name}.log", (err, data) ->
+        throw err if err
+        for msgstr in data.toString().split("\n")
+          break if msgstr == ''
+          msg = msgstr.split(": ")
+          buffer.push [msg[0], msg[1]]
 
 load_chat_log()
 
