@@ -192,7 +192,7 @@ parse_line = (line, io) ->
 pong_everyone = ->
   if sockets.length > 0 && handles.length > 0
     broadcast_message(null, "PONG", [build_handle_list()])
-    clean_handles
+    clean_handles()
 
 # start the server
 
