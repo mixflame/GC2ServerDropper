@@ -213,6 +213,10 @@ server = net.createServer((socket) ->
     socket.end
     remove_dead_socket(socket)
 
+  socket.on "error", (err) ->
+    socket.destroy()
+
+
 ).listen port
 
 log "#{server_name} running on GC2-Node at #{host}:#{port} Replay:#{scrollback} Passworded:#{password != ''} Private:#{is_private}"
