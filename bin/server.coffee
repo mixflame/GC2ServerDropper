@@ -147,7 +147,7 @@ parse_line = (line, io) ->
     pass = parr[2]
     if handles.length != 0 && handles.indexOf(handle) > 0
       send_message(io, "ALERT", ["Your handle is in use."])
-      io.close
+      io.close()
       return
     if !handle? || handle == ""
       send_message(io, "ALERT", ["You cannot have a blank name."])
@@ -164,7 +164,7 @@ parse_line = (line, io) ->
       broadcast_message(io, "JOIN", [handle])
     else
       send_message(io, "ALERT", ["Password is incorrect."])
-      io.close
+      io.close()
     return
 
   # auth
@@ -188,7 +188,7 @@ parse_line = (line, io) ->
     else if command == "SIGNOFF"
       handles.remove handle
       broadcast_message(null, "LEAVE", [handle])
-      io.end
+      io.end()
 pong_everyone = ->
   if sockets.length > 0 && handles.length > 0
     broadcast_message(null, "PONG", [build_handle_list()])
@@ -210,11 +210,12 @@ server = net.createServer((socket) ->
 
   socket.on "end", ->
     log "FIN recvd"
-    socket.end
+    # socket.end() # not reqd
     remove_dead_socket(socket)
 
   socket.on "error", (err) ->
     socket.destroy()
+    remove_dead_socket(socket)
 
 
 ).listen port
