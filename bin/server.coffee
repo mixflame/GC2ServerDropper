@@ -210,7 +210,7 @@ server = net.createServer((socket) ->
 
   socket.on "end", ->
     log "FIN recvd"
-    # socket.end() # not reqd
+    socket.end() # not reqd
     remove_dead_socket(socket)
 
   socket.on "error", (err) ->
