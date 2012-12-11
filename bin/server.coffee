@@ -211,11 +211,11 @@ server = net.createServer((socket) ->
   socket.on "end", ->
     log "FIN recvd"
     socket.end() # not reqd
-    remove_dead_socket(socket)
+    # remove_dead_socket(socket)
 
   socket.on "error", (err) ->
     socket.destroy()
-    remove_dead_socket(socket)
+    # remove_dead_socket(socket)
 
 
 ).listen port
