@@ -215,7 +215,6 @@ server = net.createServer((socket) ->
 
   socket.on "error", (err) ->
     socket.destroy()
-    # remove_dead_socket(socket)
 
 
 ).listen port
@@ -227,7 +226,7 @@ ping_nexus()
 # timers
 
 setInterval(pong_everyone, 5000)
-setInterval(save_chat_log, 30000)
+setInterval(save_chat_log, 15000)
 
 # crash/exit
 
