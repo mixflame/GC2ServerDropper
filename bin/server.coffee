@@ -239,14 +239,14 @@ setInterval(pong_everyone, 5000)
 #   save_chat_log()
 # )
 
-process.on('SIGTERM', ->
-  log "Terminated."
-  nexus_offline()
-  save_chat_log()
-)
+# process.on('SIGTERM', ->
+#   log "Terminated."
+#   nexus_offline()
+#   save_chat_log()
+# )
 
-process.on('exit', ->
-  log "Exited."
-  nexus_offline()
-  save_chat_log()
-)
+# process.on('exit', ->
+#   log "Exited."
+#   nexus_offline()
+#   save_chat_log()
+# )
