@@ -226,7 +226,6 @@ ping_nexus()
 # timers
 
 setInterval(pong_everyone, 5000)
-# setInterval(save_chat_log, 15000) # bad
 
 # crash/exit
 
