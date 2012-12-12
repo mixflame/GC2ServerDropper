@@ -57,8 +57,7 @@ sockets = []
 ping_nexus = ->
   if is_private == false
     log "Pinging NexusNet that I'm Online!!"
-    query = encodeURIComponent("name=#{server_name}&host=#{host}&port=#{port}")
-    uri = "http://nexusnet.herokuapp.com/online?#{query}"
+    uri = "http://nexusnet.herokuapp.com/online?name=#{encodeURIComponent(server_name)}&host=#{host}&port=#{port}"
     log uri
     req = http.get uri, (res) ->
       log "Nexus Pinged."
@@ -66,8 +65,7 @@ ping_nexus = ->
 nexus_offline = ->
   if is_private == false
     log "Informing NexusNet that I have exited!!!"
-    query = encodeURIComponent("name=#{server_name}")
-    uri = "http://nexusnet.herokuapp.com/offline_by_name?#{query}"
+    uri = "http://nexusnet.herokuapp.com/offline_by_name?name=#{encodeURIComponent(server_name)}"
     log uri
     req = http.get uri, (res) ->
       log "Nexus informed."
