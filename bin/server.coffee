@@ -27,8 +27,9 @@ GUID = ->
   S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()
 
 log = (msg) ->
-  #unless msg.indexOf('PING') > 0 || msg.indexOf('PONG') > 0
-  # util.log "#{msg}\n"
+  if debug == true
+    unless msg.indexOf('PING') > 0 || msg.indexOf('PONG') > 0
+      util.log "#{msg}\n"
 
 p = (obj) ->
   log util.inspect(obj)
@@ -41,6 +42,10 @@ server_name = process.argv[4]
 password = process.argv[5] || ""
 is_private = process.argv[6] == "true"
 scrollback = process.argv[7] == "true"
+
+#optional
+if process.argv.length > 7
+  debug = process.argv[8] == "true"
 
 handle_keys = {}
 socket_keys = {}
