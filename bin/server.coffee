@@ -226,26 +226,24 @@ ping_nexus()
 # timers
 
 setInterval(pong_everyone, 5000)
-setInterval(save_chat_log, 15000)
+# setInterval(save_chat_log, 15000) # bad
 
 # crash/exit
 
-# process.on('uncaughtException', (e) ->
-#   log "Uncaught #{e}.. Crashing"
-#   # unless is_private?
-#   nexus_offline()
-#   save_chat_log()
-# )
+process.on('uncaughtException', (e) ->
+  log "Uncaught #{e}.. Crashing"
+  nexus_offline()
+  save_chat_log()
+)
 
-# process.on('SIGTERM', ->
-#   log "Terminated."
-#   # unless is_private?
-#   nexus_offline()
-#   save_chat_log()
-# )
+process.on('SIGTERM', ->
+  log "Terminated."
+  nexus_offline()
+  save_chat_log()
+)
 
 process.on('exit', ->
-  log "Terminated."
+  log "Exited."
   nexus_offline()
   save_chat_log()
 )
