@@ -16,10 +16,13 @@ class Server < ActiveRecord::Base
     # binding.pry
     server_path = "#{Rails.root.to_s}/bin/server.coffee '#{self.host}' '#{self.port}' '#{self.name}' '#{self.password}' '#{self.private}' '#{self.buffer_replay}' 'false'"
     logger.info "path: #{server_path}"
-    io = IO.popen(server_path)
-    pid = io.pid
+    #io = IO.popen(server_path)
+    #pid = io.pid
     #`#{server_path}`
     #pid = $?.pid
+    pid = fork do
+      exec(server_path)
+    end
     logger.info "opened server, pid #{pid}"
     self.update_attribute(:pid, pid)
   end
