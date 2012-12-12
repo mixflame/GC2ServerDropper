@@ -59,16 +59,14 @@ sockets = []
 ping_nexus = ->
   if is_private == false
     log "Pinging NexusNet that I'm Online!!"
-    req = http.get('nexusnet.herokuapp.com', encodeURIComponent("/online?name=#{server_name}&host=#{host}&port=#{port}"), (res) ->
+    req = http.get encodeURIComponent("http://nexusnet.herokuapp.com/online?name=#{server_name}&host=#{host}&port=#{port}"), (res) ->
       log "Nexus Pinged."
-    )
 
 nexus_offline = ->
   if is_private == false
     log "Informing NexusNet that I have exited!!!"
-    req = http.get("nexusnet.herokuapp.com", encodeURIComponent("/offline_by_name?name=#{server_name}"), (res) ->
+    req = http.get encodeURIComponent("http://nexusnet.herokuapp.com/offline_by_name?name=#{server_name}"), (res) ->
       log "Nexus informed."
-    )
 
 save_chat_log = ->
   fs.mkdir "tmp", ->
