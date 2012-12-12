@@ -59,7 +59,7 @@ sockets = []
 ping_nexus = ->
   if is_private == false
     log "Pinging NexusNet that I'm Online!!"
-    req = http.get(encodeURIComponent("http://nexusnet.herokuapp.com/online?name=#{server_name}&host=#{host}&port=#{port}"), (res) ->
+    req = http.get('nexusnet.herokuapp.com', encodeURIComponent("/online?name=#{server_name}&host=#{host}&port=#{port}"), (res) ->
       log "Nexus Pinged."
     )
 
