@@ -236,10 +236,10 @@ setInterval(pong_everyone, 5000)
 
 # crash/exit
 
-# process.on('uncaughtException', (e) ->
-#   log "Uncaught #{e}.. Crashing"
-#   save_chat_log()
-# )
+process.on('uncaughtException', (e) ->
+  log "Uncaught #{e}.. Crashing"
+  save_chat_log()
+)
 
 process.on('SIGTERM', ->
   log "Terminated."
