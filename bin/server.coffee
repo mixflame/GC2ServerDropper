@@ -1,8 +1,6 @@
 #!/usr/bin/env coffee
 
 # GC2-Node
-# Ugly mess of a program, I'll admit it
-# But it works.
 # Full support for GC2 Protocol v3
 # Support: Scrollback. Logsaving. Nexus Pinging. Arguments.
 # Coming soon: Nothing.
@@ -59,13 +57,17 @@ sockets = []
 ping_nexus = ->
   if is_private == false
     log "Pinging NexusNet that I'm Online!!"
-    req = http.get encodeURIComponent("http://nexusnet.herokuapp.com/online?name=#{server_name}&host=#{host}&port=#{port}"), (res) ->
+    uri = encodeURIComponent("http://nexusnet.herokuapp.com/online?name=#{server_name}&host=#{host}&port=#{port}")
+    log uri
+    req = http.get uri, (res) ->
       log "Nexus Pinged."
 
 nexus_offline = ->
   if is_private == false
     log "Informing NexusNet that I have exited!!!"
-    req = http.get encodeURIComponent("http://nexusnet.herokuapp.com/offline_by_name?name=#{server_name}"), (res) ->
+    uri = encodeURIComponent("http://nexusnet.herokuapp.com/offline_by_name?name=#{server_name}")
+    log uri
+    req = http.get uri, (res) ->
       log "Nexus informed."
 
 save_chat_log = ->
