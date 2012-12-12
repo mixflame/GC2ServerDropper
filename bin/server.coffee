@@ -126,6 +126,8 @@ sock_send = (io, msg) ->
   msg = "#{msg}\0"
   if io? && io.writable
     io.write msg
+  else
+    remove_dead_socket(io)
 broadcast_message = (sender, opcode, args) ->
   msg = opcode + "::!!::" + args.join("::!!::")
   broadcast msg, sender
