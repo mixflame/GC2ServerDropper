@@ -18,11 +18,14 @@ class Server < ActiveRecord::Base
     logger.info "path: #{server_path}"
     #io = IO.popen(server_path)
     #pid = io.pid
-    #`#{server_path}`
-    #pid = $?.pid
-    pid = fork do
-      exec(server_path)
+    fork do
+      `#{server_path}`
+      pid = $?.pid
     end
+    # fork do
+    #   exec(server_path)
+    #   pid = `$!`
+    # end
     logger.info "opened server, pid #{pid}"
     self.update_attribute(:pid, pid)
   end
