@@ -17,13 +17,6 @@ class Server < ActiveRecord::Base
     server_path = "#{Rails.root.to_s}/bin/server.coffee '#{self.host}' '#{self.port}' '#{self.name}' '#{self.password}' '#{self.private}' '#{self.buffer_replay}'"
     server = self
     logger.info "path: #{server_path}"
-    # fork do
-    #   io = IO.popen(server_path) do |f|
-    #     pid = f.gets # says its pid
-    #     logger.info "opened server, pid #{pid}"
-    #     server.update_attribute(:pid, pid)
-    #   end
-    # end
     io = IO.popen(server_path)
     pid = io.gets
     server.update_attribute(:pid, pid)
@@ -38,7 +31,18 @@ class Server < ActiveRecord::Base
 
   def stop
     logger.info "stopping server #{self.host}:#{self.port} pid #{self.pid}"
-    Process.kill 'INT', self.pid
+    if alive?
+      Process.kill 'INT', self.pid
+    end
+  end
+
+  def alive?
+    begin
+      Process.kill(0, self.pid)
+      true
+    rescue Errno::ESRCH
+      false
+    end
   end
 
 end
