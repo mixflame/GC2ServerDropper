@@ -25,7 +25,7 @@ class Server < ActiveRecord::Base
     #   end
     # end
     io = IO.popen(server_path)
-    pid = io.read
+    pid = io.gets
     server.update_attribute(:pid, pid)
   end
 
