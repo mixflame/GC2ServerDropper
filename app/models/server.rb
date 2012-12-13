@@ -31,9 +31,7 @@ class Server < ActiveRecord::Base
 
   def stop
     logger.info "stopping server #{self.host}:#{self.port} pid #{self.pid}"
-    #result = exec("kill #{self.pid}")
-    #logger.info "kill result: #{result}"
-    `pkill -TERM -P #{self.pid}`
+    Process.kill 'INT', self.pid
   end
 
 end
