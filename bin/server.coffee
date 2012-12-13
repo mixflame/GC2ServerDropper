@@ -253,3 +253,6 @@ process.on('exit', ->
   nexus_offline()
   save_chat_log()
 )
+
+console.log process.pid
+
