@@ -1,4 +1,4 @@
-#!/home/globalchat/.rvm/rubies/ruby-1.9.3-p327/bin/ruby
+#!/usr/bin/env ruby
 
 # A chat server with a custom protocol and roomless design
 #
@@ -16,19 +16,17 @@ require 'pstore'
 
 class GlobalChatServer < GServer
 
-  attr_accessor :handles, :buffer, :handle_keys, :sockets, :password, :socket_keys, :scrollback, :server_name
+  attr_accessor :handles, :buffer, :handle_keys, :sockets, :password, :socket_keys, :scrollback, :server_name, :is_private, :host
 
   # Boot the server
   # Params:
   # +port+:: listening port
   # +args+:: GServer args
-  def initialize(port=9994, *args)
+  def initialize(port, *args)
     super(port, *args)
     self.audit = true
     self.debug = true
-    # hostname. need to seperate the logs
-    # i put in tmp for nicety
-    @pstore = PStore.new("tmp/#{ARGV[0]}.pstore")
+    @pstore = PStore.new("gchat.pstore")
     @handle_keys = {} # stores handle
     @socket_keys = {} # stores chat_token
     # @port_keys = {} # unnecessary in PING design
@@ -36,9 +34,36 @@ class GlobalChatServer < GServer
     @handles = []
     @sockets = []
     @buffer = []
-    @server_name = "GlobalChatNet"
+
     load_chat_log
     @mutex = Mutex.new
+
+    ObjectSpace.define_finalizer(self,
+    self.class.method(:finalize).to_proc)
+  end
+
+  def self.create(host, port, name, password, is_private, replay)
+    gc = new(port, '0.0.0.0', 1000, $stderr, true)
+    gc.server_name = name
+    gc.host = host
+    gc.scrollback = replay
+    gc.is_private = is_private
+    gc.password = password
+    gc.start
+    unless is_private == true
+      ping_nexus(@server_name, host, port)
+    end
+    gc.status
+    gc.join
+    # gc
+  end
+
+  def GlobalChatServer.finalize(id)
+    puts "GlobalChatServer #{id} dying at #{Time.new}"
+    unless @private == true
+      nexus_offline(@server_name)
+    end
+    save_chat_log
   end
 
   # Broadcast a command to every connected client
@@ -75,7 +100,6 @@ class GlobalChatServer < GServer
   # +handle+:: inactive user's handle
   def remove_user_by_handle(handle)
     ct = @handle_keys.key(handle)
-    handle = @handle_keys[ct]
     socket = @socket_keys.key(ct)
     @sockets.delete socket
 
@@ -171,20 +195,17 @@ class GlobalChatServer < GServer
     if command == "SIGNON"
       handle = parr[1]
       password = parr[2]
-
       if !@handles.length == 0 && @handles.include?(handle)
         send_message(io, "ALERT", ["Your handle is in use."])
         io.close
         return
       end
-
       if handle == nil || handle == ""
         send_message(io, "ALERT", ["You cannot have a blank name."])
         #remove_dead_socket io
         io.close
         return
       end
-
       if ((@password == password) || ((password === nil) && (@password == "")))
         # uuid are guaranteed unique
         chat_token = rand(36**8).to_s(36)
@@ -199,14 +220,10 @@ class GlobalChatServer < GServer
         send_message(io, "TOKEN", [chat_token, handle, @server_name])
         broadcast_message(io, "JOIN", [handle])
       else
-
         send_message(io, "ALERT", ["Password is incorrect."])
         io.close
-
       end
-
       return
-
     end
 
     # auth
@@ -221,7 +238,6 @@ class GlobalChatServer < GServer
         send_message(io, "BUFFER", [buffer])
       elsif command == "MESSAGE"
         msg = parr[1]
-        message = "#{handle}: #{msg}\n"
         @buffer << [handle, msg]
         broadcast_message(io, "SAY", [handle, msg])
       elsif command == "PING"
@@ -308,7 +324,8 @@ class GlobalChatServer < GServer
   # Params:
   # +msg+:: what to log
   def log(msg)
-    #puts msg
+    # puts msg
+    $stdout.write("#{msg}\n")
   end
 
   # Persist my chat buffer to disk
@@ -330,55 +347,31 @@ class GlobalChatServer < GServer
     end
   end
 
+  # Tell the Nexus I am online
+  # Params:
+  # +chatnet_name+:: The name of my chat server
+  # +host+:: Hostname of chat server
+  # +port+:: The listening port
+  def ping_nexus(chatnet_name, host, port)
+    puts "Pinging NexusNet that I'm Online!!"
+    uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
+    #query = {:name => chatnet_name, :port => port, :host => host}
+    #uri.query = URI.encode_www_form( query )
+    Net::HTTP.get(uri)
+    $published = true
+  end
+
+  # Tell Nexus I am no longer online
+  def nexus_offline(chatnet_name)
+    puts "Informing NexusNet that I have exited!!!"
+    Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?name=#{chatnet_name}")
+  end
+
+
 end
 
-# Tell the Nexus I am online
-# Params:
-# +chatnet_name+:: The name of my chat server
-# +host+:: Hostname of chat server
-# +port+:: The listening port
-def ping_nexus(chatnet_name, host, port)
-  #puts "Pinging NexusNet that I'm Online!!"
-  uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
-  Net::HTTP.get(uri)
-  $published = true
-end
-
-# Tell Nexus I am no longer online
-def nexus_offline(chatnet_name)
-  #puts "Informing NexusNet that I have exited!!!"
-  Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?chatnet_name=#{chatnet_name}")
-end
-
-at_exit do
-  nexus_offline(ARGV[2])
-  $gc.save_chat_log
-end
-
-# usage
-# server.rb <host> <port> <name> <password> <private> <scrollback>
-# eg:
-# ./server.rb "globalchat2.net" "9994" "GlobalChatNet" "" "false" "true"
-
-host = ARGV[0]
-port = ARGV[1]
-chatnet_name = ARGV[2]
-password = ARGV[3]
-is_private = ARGV[4] == "true"
-scrollback = ARGV[5] == "true"
 
 
-$gc = GlobalChatServer.new(port, '0.0.0.0', 1000, $stderr, true)
-$gc.password = password # set a password here
-$gc.scrollback = scrollback
-$gc.server_name = chatnet_name
-$gc.start
-
-unless is_private
-  ping_nexus(chatnet_name, host, $gc.port)
-end
-$gc.status
-
-$gc.join
-
-
+#Thread.new do
+GlobalChatServer.create(ARGV[0], ARGV[1], ARGV[2], ARGV[3], ARGV[4] == "true", ARGV[5] == "true")
+#end
