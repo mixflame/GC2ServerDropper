@@ -1,3 +1,4 @@
+#!/home/globalchat/.rvm/gems/ruby-1.9.3-p327
 #!/usr/bin/env ruby
 
 # A chat server with a custom protocol and roomless design
