@@ -377,7 +377,4 @@ class GlobalChatServer < GServer
 end
 
 
-
-#Thread.new do
 GlobalChatServer.create(ARGV[0], ARGV[1], ARGV[2], ARGV[3], ARGV[4] == "true", ARGV[5] == "true")
-#end
