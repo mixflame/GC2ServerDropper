@@ -353,19 +353,24 @@ class GlobalChatServer < GServer
   # +chatnet_name+:: The name of my chat server
   # +host+:: Hostname of chat server
   # +port+:: The listening port
-  def ping_nexus(chatnet_name, host, port)
-    puts "Pinging NexusNet that I'm Online!!"
-    uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
-    #query = {:name => chatnet_name, :port => port, :host => host}
-    #uri.query = URI.encode_www_form( query )
-    Net::HTTP.get(uri)
-    $published = true
-  end
 
-  # Tell Nexus I am no longer online
-  def nexus_offline(chatnet_name)
-    puts "Informing NexusNet that I have exited!!!"
-    Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?name=#{chatnet_name}")
+  class << self
+
+    def ping_nexus(chatnet_name, host, port)
+      puts "Pinging NexusNet that I'm Online!!"
+      uri = URI.parse("http://nexusnet.herokuapp.com/online?name=#{chatnet_name}&host=#{host}&port=#{port}")
+      #query = {:name => chatnet_name, :port => port, :host => host}
+      #uri.query = URI.encode_www_form( query )
+      Net::HTTP.get(uri)
+      $published = true
+    end
+
+    # Tell Nexus I am no longer online
+    def nexus_offline(chatnet_name)
+      puts "Informing NexusNet that I have exited!!!"
+      Net::HTTP.get_print("nexusnet.herokuapp.com", "/offline_by_name?name=#{chatnet_name}")
+    end
+
   end
 
 
